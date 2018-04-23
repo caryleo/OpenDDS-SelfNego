@@ -1,44 +1,16 @@
+#pragma
+
+#include "stdafx.h"
 #include "NetState.h"
 
-NetState::NetState(void)
-{
-    bandWidth = 0;
-    throuhgput = 0;
-    ratio = 0;
-    delay = 0;
-    packetLoss = 0;
+
+NetState::NetState() {
 }
 
-NetState::~NetState(void)
-{
+NetState::~NetState() {
 }
 
-//void NetState::testBandwidth()
-//{
-//
-//}
-//
-//void NetState::testRatio()
-//{
-//
-//}
-//
-//void NetState::testDelay()
-//{
-//
-//}
-//
-//void NetState::testThroughtput()
-//{
-//
-//}
-//
-//void NetState::testPacketLoss()
-//{
-//
-//}
-void NetState::test(char ip[])
-{
+void NetState::test(char ip[]) {
 	long bands[10];
 	GetSysInfo info;
 	int num = info.GetInterFaceCount(bands);
@@ -63,50 +35,76 @@ void NetState::test(char ip[])
 	double times = 0;
 	int rolls = 100;
 	int faildpackegs = 0;
-	for (int i = 0; i < rolls; i++)
-	{
+	for (int i = 0; i < rolls; i++){
 		objPing.Ping(szDestIP, &reply, (DWORD)10);
 		if (reply.m_dwRoundTripTime > 50) {
 			faildpackegs++;
 			continue;
 		}
 		times += reply.m_dwRoundTripTime;
-		printf("\r[*]Network Testing...%d%%", i);
+		printf("\r[*]Network Testing[");
+		for (int j = 0; j + 1 < rolls / 2; j++) {
+			if (j < i / 2)
+				printf("#");
+			else
+				printf(".");
+		}
+		printf("]%d%%", i + 1);
 		//printf("Reply from %s: bytes=%ld time=%ldms TTL=%ld\n", szDestIP, reply.m_dwBytes, reply.m_dwRoundTripTime, reply.m_dwTTL);
 		//Sleep(500);
 	}
+	printf("\n[OK]Network test Finished!!!\n");
 	setDelay(times / (double)(rolls - faildpackegs));
 	setPacketLoss(((double)faildpackegs / rolls) * 100.0);
-	setThrouhgput(DEF_PACKET_SIZE / avrtime);
-	setRatio(throuhgpu / bandWidth);
+	//setThroughput(DEF_PACKET_SIZE / delay);
 }
 
 void NetState::setBandWidth(double input)
 {
-    bandWidth = input;
+	bandWidth = input;
 }
 
 double NetState::getBandWidth()
 {
-    return bandWidth;
+	return bandWidth;
 }
+
+//void NetState::setThroughput(double input)
+//{
+//	throughput = input;
+//}
+//
+//double NetState::getThroughput()
+//{
+//	return throughput;
+//}
+//
+//void NetState::setRatio(double input)
+//{
+//	ratio = input;
+//}
+//
+//double NetState::getRatio()
+//{
+//	return ratio;
+//}
 
 void NetState::setDelay(double input)
 {
-    delay = input;
+	delay = input;
 }
 
 double NetState::getDelay()
 {
-    return delay;
+	return delay;
 }
 
 void NetState::setPacketLoss(double input)
 {
-    packetLoss = input;
+	packetLoss = input;
 }
 
 double NetState::getPacketLoss()
 {
-    return packetLoss;
+	return packetLoss;
 }

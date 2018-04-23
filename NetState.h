@@ -1,32 +1,31 @@
-#ifndef NETSTATE_H_
-#define NETSTATE_H_
-
 #pragma once
 
-class NetState
-{
-  public:
-    NetState(void);
-    ~NetState(void);
+#include "stdafx.h"
+#include <cstring>
+#include <afxtempl.h>
+#include "GetsysInfo.h"
+#include "Ping.h"
 
-//    void testBandwidth();   //æµ‹è¯•å¾—åˆ°å¸¦å®½
-//    void testThroughtput(); //æµ‹è¯•å¾—åˆ°ååé‡
-//    void testRatio();       //æµ‹è¯•å¾—åˆ°åˆ©ç”¨ç‡
-//    void testDelay();       //æµ‹è¯•å¾—åˆ°æ—¶å»¶
-//    void testPacketLoss();  //æµ‹è¯•å¾—åˆ°ä¸¢åŒ…ç‡
-    void test(char ip[]);
+class NetState {
+public:
+	NetState();
+	~NetState();
+	void test(char ip[]);
+	void setBandWidth(double input);
+	double getBandWidth();
+	/*void setThroughput(double input);
+	double getThroughput();
+	void setRatio(double input);
+	double getRatio();*/
+	void setDelay(double input);
+	double getDelay();
+	void setPacketLoss(double input);
+	double getPacketLoss();
 
-    void setBandWidth(double input);
-    double getBandWidth();
-    void setDelay(double input);
-    double getDelay();
-    void setPacketLoss(double input);
-    double getPacketLoss();
-
-  private:
-    double bandWidth;  //å¸¦å®½ï¼Œå•ä½bps
-    double delay;      //æ—¶å»¶ï¼Œå•ä½ms
-    double packetLoss; //ä¸¢åŒ…ç‡
+private:
+	double bandWidth;  //´ø¿í£¬µ¥Î»bps
+	//double throughput; //ÍÌÍÂÁ¿£¬µ¥Î»bps
+	//double ratio;      //ÀûÓÃÂÊ
+	double delay;      //Ê±ÑÓ£¬µ¥Î»ms
+	double packetLoss; //¶ª°üÂÊ
 };
-
-#endif

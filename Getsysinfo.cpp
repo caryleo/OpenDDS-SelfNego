@@ -32,24 +32,24 @@ int GetSysInfo::GetInterFaceCount(long *band) {
 
 		char s_key[4096];
 		sprintf_s(s_key, 4096, "510");
-		//RegQueryValueExçš„å›ºå®šè°ƒç”¨æ ¼å¼          
+		//RegQueryValueExµÄ¹Ì¶¨µ÷ÓÃ¸ñÊ½          
 		CString str(s_key);
 
-		//å¦‚æžœRegQueryValueExå‡½æ•°æ‰§è¡Œå¤±è´¥åˆ™è¿›å…¥å¾ªçŽ¯  
+		//Èç¹ûRegQueryValueExº¯ÊýÖ´ÐÐÊ§°ÜÔò½øÈëÑ­»·  
 		while ((ret = RegQueryValueEx(HKEY_PERFORMANCE_DATA, str, 0, &type, data, &size)) != ERROR_SUCCESS)
 		{
 			Sleep(10);
-			//å¦‚æžœRegQueryValueExçš„è¿”å›žå€¼ä¸ºERROR_MORE_DATA(ç”³è¯·çš„å†…å­˜åŒºdataå¤ªå°ï¼Œä¸èƒ½å®¹çº³RegQueryValueExè¿”å›žçš„æ•°æ®)  
+			//Èç¹ûRegQueryValueExµÄ·µ»ØÖµÎªERROR_MORE_DATA(ÉêÇëµÄÄÚ´æÇødataÌ«Ð¡£¬²»ÄÜÈÝÄÉRegQueryValueEx·µ»ØµÄÊý¾Ý)  
 			if (ret == ERROR_MORE_DATA)
 			{
 				Sleep(10);
 				size += DEFAULT_BUFFER_SIZE;
-				data = (unsigned char*)realloc(data, size);//é‡æ–°åˆ†é…è¶³å¤Ÿå¤§çš„å†…å­˜  
+				data = (unsigned char*)realloc(data, size);//ÖØÐÂ·ÖÅä×ã¹»´óµÄÄÚ´æ  
 
-				ret = RegQueryValueEx(HKEY_PERFORMANCE_DATA, str, 0, &type, data, &size);//é‡æ–°æ‰§è¡ŒRegQueryValueExå‡½æ•°  
+				ret = RegQueryValueEx(HKEY_PERFORMANCE_DATA, str, 0, &type, data, &size);//ÖØÐÂÖ´ÐÐRegQueryValueExº¯Êý  
 			}
-			//å¦‚æžœRegQueryValueExè¿”å›žå€¼ä»æ—§æœªæˆåŠŸåˆ™å‡½æ•°è¿”å›ž.....(æ³¨æ„å†…å­˜æ³„éœ²â€œfreeå‡½æ•°â€~~~)ã€‚  
-			//è¿™ä¸ªifä¿è¯äº†è¿™ä¸ªwhileåªèƒ½è¿›å…¥ä¸€æ¬¡~~~é¿å…æ­»å¾ªçŽ¯  
+			//Èç¹ûRegQueryValueEx·µ»ØÖµÈÔ¾ÉÎ´³É¹¦Ôòº¯Êý·µ»Ø.....(×¢ÒâÄÚ´æÐ¹Â¶¡°freeº¯Êý¡±~~~)¡£  
+			//Õâ¸öif±£Ö¤ÁËÕâ¸öwhileÖ»ÄÜ½øÈëÒ»´Î~~~±ÜÃâËÀÑ­»·  
 			if (ret != ERROR_SUCCESS)
 			{
 				if (NULL != data)
@@ -57,14 +57,14 @@ int GetSysInfo::GetInterFaceCount(long *band) {
 					free(data);
 					data = NULL;
 				}
-				return 0;//0ä¸ªæŽ¥å£  
+				return 0;//0¸ö½Ó¿Ú  
 			}
 		}
 
-		//å‡½æ•°æ‰§è¡ŒæˆåŠŸä¹‹åŽå°±æ˜¯å¯¹è¿”å›žçš„dataå†…å­˜ä¸­æ•°æ®çš„è§£æžäº†ï¼Œè¿™ä¸ªå»ºè®®åŽ»æŸ¥çœ‹MSDNæœ‰å…³RegQueryValueExå‡½æ•°å‚æ•°æ•°æ®ç»“æž„çš„è¯´æ˜Ž  
-		//å¾—åˆ°æ•°æ®å—       
+		//º¯ÊýÖ´ÐÐ³É¹¦Ö®ºó¾ÍÊÇ¶Ô·µ»ØµÄdataÄÚ´æÖÐÊý¾ÝµÄ½âÎöÁË£¬Õâ¸ö½¨ÒéÈ¥²é¿´MSDNÓÐ¹ØRegQueryValueExº¯Êý²ÎÊýÊý¾Ý½á¹¹µÄËµÃ÷  
+		//µÃµ½Êý¾Ý¿é       
 		PERF_DATA_BLOCK  *dataBlockPtr = (PERF_DATA_BLOCK *)data;
-		//å¾—åˆ°ç¬¬ä¸€ä¸ªå¯¹è±¡  
+		//µÃµ½µÚÒ»¸ö¶ÔÏó  
 		PERF_OBJECT_TYPE *objectPtr = (PERF_OBJECT_TYPE *)((BYTE *)dataBlockPtr + dataBlockPtr->HeaderLength);
 
 		for (int a = 0; a<(int)dataBlockPtr->NumObjectTypes; a++)
@@ -114,9 +114,9 @@ int GetSysInfo::GetInterFaceCount(long *band) {
 					printf("%ld\n", bandwith);
 					printf("***************************************************");*/
 					band[b] = bandwith;
-					Interfaces.AddTail(CString(pName)); //å„ç½‘å¡çš„åç§°  
-					Bandwidths.AddTail(bandwith);       //å¸¦å®½  
-					TotalTraffics.AddTail(tottraff);    // æµé‡åˆå§‹åŒ–ä¸º0  
+					Interfaces.AddTail(CString(pName)); //¸÷Íø¿¨µÄÃû³Æ  
+					Bandwidths.AddTail(bandwith);       //´ø¿í  
+					TotalTraffics.AddTail(tottraff);    // Á÷Á¿³õÊ¼»¯Îª0  
 
 					PERF_COUNTER_BLOCK  *pCtrBlk = (PERF_COUNTER_BLOCK *)((BYTE *)instancePtr + instancePtr->ByteLength);
 

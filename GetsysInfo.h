@@ -22,15 +22,15 @@ public:
 	~GetSysInfo(void);
 
 public:
-				   /***********è·å–ç½‘å¡æ•°ç›®å’Œåå­—***********/
+				   /***********»ñÈ¡Íø¿¨ÊıÄ¿ºÍÃû×Ö***********/
 	//int  GetInterFaceCount(struct interfaces *strs);
 	int  GetInterFaceCount(long *band);
 	void GetInterFaceName(CString &InterfaceName, int pNum);
 	
 private:
-	CStringList Interfaces;                       //ä¿å­˜æ‰€æœ‰ç½‘å¡çš„åå­—  
-	CList < DWORD, DWORD &>       Bandwidths;   //å„ç½‘å¡çš„å¸¦å®½  
-	CList < DWORD, DWORD &>       TotalTraffics;    //å„ç½‘å¡çš„æ€»æµé‡  
+	CStringList Interfaces;                       //±£´æËùÓĞÍø¿¨µÄÃû×Ö  
+	CList < DWORD, DWORD &>       Bandwidths;   //¸÷Íø¿¨µÄ´ø¿í  
+	CList < DWORD, DWORD &>       TotalTraffics;    //¸÷Íø¿¨µÄ×ÜÁ÷Á¿  
 };
 
 #endif

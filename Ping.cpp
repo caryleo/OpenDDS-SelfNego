@@ -20,7 +20,7 @@ CPing::CPing() :
 		WSAEventSelect(m_sockRaw, m_event, FD_READ);
 		m_bIsInitSucc = TRUE;
 
-		m_szICMPData = (char*)malloc(DEF_PACKET_SIZE + sizeof(ICMPHeader));
+		m_szICMPData = (char*)malloc(psize + sizeof(ICMPHeader));
 
 		if (m_szICMPData == NULL)
 		{
@@ -56,20 +56,20 @@ BOOL CPing::Ping(char *szDestIP, PingReply *pPingReply, DWORD dwTimeout)
 
 BOOL CPing::PingCore(DWORD dwDestIP, PingReply *pPingReply, DWORD dwTimeout)
 {
-	//åˆ¤æ–­åˆå§‹åŒ–æ˜¯å¦æˆåŠŸ
+	//ÅÐ¶Ï³õÊ¼»¯ÊÇ·ñ³É¹¦
 	if (!m_bIsInitSucc)
 	{
 		return FALSE;
 	}
 
-	//é…ç½®SOCKET
+	//ÅäÖÃSOCKET
 	sockaddr_in sockaddrDest;
 	sockaddrDest.sin_family = AF_INET;
 	sockaddrDest.sin_addr.s_addr = dwDestIP;
 	int nSockaddrDestSize = sizeof(sockaddrDest);
 
-	//æž„å»ºICMPåŒ…
-	int nICMPDataSize = DEF_PACKET_SIZE + sizeof(ICMPHeader);
+	//¹¹½¨ICMP°ü
+	int nICMPDataSize = psize + sizeof(ICMPHeader);
 	ULONG ulSendTimestamp = GetTickCountCalibrate();
 	USHORT usSeq = ++s_usPacketSeq;
 	memset(m_szICMPData, 0, nICMPDataSize);
@@ -81,13 +81,13 @@ BOOL CPing::PingCore(DWORD dwDestIP, PingReply *pPingReply, DWORD dwTimeout)
 	pICMPHeader->m_ulTimeStamp = ulSendTimestamp;
 	pICMPHeader->m_usChecksum = CalCheckSum((USHORT*)m_szICMPData, nICMPDataSize);
 
-	//å‘é€ICMPæŠ¥æ–‡
+	//·¢ËÍICMP±¨ÎÄ
 	if (sendto(m_sockRaw, m_szICMPData, nICMPDataSize, 0, (struct sockaddr*)&sockaddrDest, nSockaddrDestSize) == SOCKET_ERROR)
 	{
 		return FALSE;
 	}
 
-	//åˆ¤æ–­æ˜¯å¦éœ€è¦æŽ¥æ”¶ç›¸åº”æŠ¥æ–‡
+	//ÅÐ¶ÏÊÇ·ñÐèÒª½ÓÊÕÏàÓ¦±¨ÎÄ
 	if (pPingReply == NULL)
 	{
 		return TRUE;
@@ -96,7 +96,7 @@ BOOL CPing::PingCore(DWORD dwDestIP, PingReply *pPingReply, DWORD dwTimeout)
 	char recvbuf[256] = { "\0" };
 	while (TRUE)
 	{
-		//æŽ¥æ”¶å“åº”æŠ¥æ–‡
+		//½ÓÊÕÏìÓ¦±¨ÎÄ
 		if (WSAWaitForMultipleEvents(1, &m_event, FALSE, 100, FALSE) != WSA_WAIT_TIMEOUT)
 		{
 			WSANETWORKEVENTS netEvent;
@@ -112,9 +112,9 @@ BOOL CPing::PingCore(DWORD dwDestIP, PingReply *pPingReply, DWORD dwTimeout)
 					USHORT usIPHeaderLen = (USHORT)((pIPHeader->m_byVerHLen & 0x0f) * 4);
 					ICMPHeader *pICMPHeader = (ICMPHeader*)(recvbuf + usIPHeaderLen);
 
-					if (pICMPHeader->m_usID == m_usCurrentProcID //æ˜¯å½“å‰è¿›ç¨‹å‘å‡ºçš„æŠ¥æ–‡
-						&& pICMPHeader->m_byType == ECHO_REPLY //æ˜¯ICMPå“åº”æŠ¥æ–‡
-						&& pICMPHeader->m_usSeq == usSeq //æ˜¯æœ¬æ¬¡è¯·æ±‚æŠ¥æ–‡çš„å“åº”æŠ¥æ–‡
+					if (pICMPHeader->m_usID == m_usCurrentProcID //ÊÇµ±Ç°½ø³Ì·¢³öµÄ±¨ÎÄ
+						&& pICMPHeader->m_byType == ECHO_REPLY //ÊÇICMPÏìÓ¦±¨ÎÄ
+						&& pICMPHeader->m_usSeq == usSeq //ÊÇ±¾´ÎÇëÇó±¨ÎÄµÄÏìÓ¦±¨ÎÄ
 						)
 					{
 						pPingReply->m_usSeq = usSeq;
@@ -126,7 +126,7 @@ BOOL CPing::PingCore(DWORD dwDestIP, PingReply *pPingReply, DWORD dwTimeout)
 				}
 			}
 		}
-		//è¶…æ—¶
+		//³¬Ê±
 		if (GetTickCountCalibrate() - ulSendTimestamp >= dwTimeout)
 		{
 			return FALSE;
