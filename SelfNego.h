@@ -3,6 +3,14 @@
 
 #include "NetState.h"
 
+//所有的阈值都在这里定义
+#define DELAY_THRESHOLD_1 0
+#define DELAY_THRESHOLD_2 100
+#define DELAY_THRESHOLD_3 200
+#define	PACKETLOSS_THRESHOLD_1 0
+#define	PACKETLOSS_THRESHOLD_2 1
+#define	PACKETLOSS_THRESHOLD_3 5
+
 class SelfNego
 {
   public:

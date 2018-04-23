@@ -6,6 +6,7 @@
 #include "GetsysInfo.h"
 #include "Ping.h"
 
+
 class NetState {
 public:
 	NetState();
