@@ -48,26 +48,6 @@ double NetState::getBandWidth()
     return bandWidth;
 }
 
-void NetState::setThroughput(double input)
-{
-    throuhgput = input;
-}
-
-double NetState::getThroughput()
-{
-    return throuhgput;
-}
-
-void NetState::setRatio(double input)
-{
-    ratio = input;
-}
-
-double NetState::getRatio()
-{
-    return ratio;
-}
-
 void NetState::setDelay(double input)
 {
     delay = input;
