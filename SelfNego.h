@@ -9,15 +9,12 @@ class SelfNego
     SelfNego(void);
     ~SelfNego(void);
 
-    static SelfNego* getInstance();
-    void make();
-  private:
-    static SelfNego* instance;
-    //TODO: 负责存储传入的默认QoS实例。
-
+    static SelfNego getInstance();
     void setProfile(/***/);
-    NetState* getNetState();
+    NetState getNetState();
     /***/void getQoS();
+    make
+
 };
 
 #endif

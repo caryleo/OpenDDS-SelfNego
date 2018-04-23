@@ -9,11 +9,12 @@ class NetState
     NetState(void);
     ~NetState(void);
 
-    void testBandwidth();   //测试得到带宽
-    void testThroughtput(); //测试得到吞吐量
-    void testRatio();       //测试得到利用率
-    void testDelay();       //测试得到时延
-    void testPacketLoss();  //测试得到丢包率
+//    void testBandwidth();   //测试得到带宽
+//    void testThroughtput(); //测试得到吞吐量
+//    void testRatio();       //测试得到利用率
+//    void testDelay();       //测试得到时延
+//    void testPacketLoss();  //测试得到丢包率
+    void test(char ip[]);
 
     void setBandWidth(double input);
     double getBandWidth();
