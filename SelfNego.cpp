@@ -2,7 +2,7 @@
 
 SelfNego::SelfNego(void)
 {
-
+    isReader = 0;
 }
 
 SelfNego::~SelfNego(void)
@@ -23,4 +23,9 @@ void SelfNego::getNetState()
 {
     netState = new NetState();
     netState->test(ip);
+}
+
+void SelfNego::getQoS()
+{
+
 }

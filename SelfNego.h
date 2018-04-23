@@ -18,8 +18,9 @@ class SelfNego
   private:
     static SelfNego *instance;
     NetState *netState;
-    DDS::DataReaderQos reader;
-    DDS::DataReaderQos writer;
+    DDS::DataReaderQos reader;  //1
+    DDS::DataReaderQos writer;  //2
+    int isReader;
     char ip[20];
 };
 
