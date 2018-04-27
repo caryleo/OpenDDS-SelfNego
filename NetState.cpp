@@ -1,6 +1,6 @@
 #pragma
 
-#include "stdafx.h"
+
 #include "NetState.h"
 
 

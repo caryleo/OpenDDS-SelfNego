@@ -1,10 +1,15 @@
 #pragma once
 
-#include "stdafx.h"
 #include <cstring>
 #include <afxtempl.h>
 #include "GetsysInfo.h"
 #include "Ping.h"
+#include <dds\DdsDcpsInfrastructureC.h>
+#include <dds\DdsDcpsPublicationC.h>
+#include <dds/DdsDcpsSubscriptionC.h>
+#include <dds\DCPS\StaticIncludes.h>
+#include <dds\DCPS\Service_Participant.h>
+#include <dds\DCPS\Marked_Default_Qos.h>
 
 
 class NetState {

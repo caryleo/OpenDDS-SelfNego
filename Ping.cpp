@@ -1,9 +1,10 @@
-#include "stdafx.h"
 #include "Ping.h"
 #include <windows.h>
 #define _WINSOCK_DEPRECATED_NO_WARNINGS true
 
 USHORT CPing::s_usPacketSeq = 0;
+
+static int psize = 32;
 
 CPing::CPing() :
 	m_szICMPData(NULL),

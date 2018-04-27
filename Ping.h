@@ -2,7 +2,6 @@
 
 
 #include <afxsock.h>
-#include "stdafx.h"
 
 //这里需要导入库 Ws2_32.lib，在不同的IDE下可能不太一样 
 //#pragma comment(lib, "Ws2_32.lib")
