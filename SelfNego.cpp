@@ -247,6 +247,12 @@ DDS::DataReaderQos SelfNego::getReaderQos(char input[])
 
 DDS::DataWriterQos SelfNego::getWriterQos(char input[])
 {
+	int len = strlen(input);
+	int j = 0;
+	for (int i = 10; i < 21; i++)
+	{
+		ip[j++] = input[i];
+	}
     DDS::DataWriterQos ans;
     ans = DATAWRITER_QOS_DEFAULT;
     isReader = 2;

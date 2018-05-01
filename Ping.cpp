@@ -1,6 +1,7 @@
 #include "Ping.h"
-#include <windows.h>
 #define _WINSOCK_DEPRECATED_NO_WARNINGS true
+
+
 
 USHORT CPing::s_usPacketSeq = 0;
 

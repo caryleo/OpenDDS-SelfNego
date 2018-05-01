@@ -1,9 +1,10 @@
 #pragma once
 
-#include <cstring>
-#include <afxtempl.h>
+
 #include "GetsysInfo.h"
 #include "Ping.h"
+#include <cstring>
+#include <afxtempl.h>
 #include <dds\DdsDcpsInfrastructureC.h>
 #include <dds\DdsDcpsPublicationC.h>
 #include <dds/DdsDcpsSubscriptionC.h>
