@@ -12,7 +12,7 @@ NetState::~NetState() {
 }
 
 void NetState::test(char ip[]) {
-	char cmd[100] = "C:\\Users\\Justian\\source\\repos\\NetState\\nestat.exe ";
+	char cmd[100] = "nestat.exe ";
 	strcat_s(cmd, ip);
 	FILE *pf = _popen(cmd, "r");
 	char res[1000] = { 0 };
