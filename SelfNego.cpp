@@ -1,6 +1,8 @@
 #include "SelfNego.h"
 
 
+SelfNego* SelfNego::s_instance = nullptr;
+
 SelfNego::SelfNego(void)
 {
     isReader = 0;
@@ -11,22 +13,13 @@ SelfNego::~SelfNego(void)
 
 }
 
-//SelfNego* SelfNego::getInstance()
-//{
-//    if(s_instance == nullptr)
-//    {
-//        s_instance = new SelfNego();
-//    }
-//    return s_instance;
-//}
-
 void SelfNego::getNetState()
 {
     netState = new NetState();
     netState->test(ip);
 }
 
-void SelfNego::getQoS()
+int SelfNego::getQoS()
 {
 	double delay = netState->getDelay();
 	double packetloss = netState->getPacketLoss();
@@ -231,21 +224,13 @@ void SelfNego::getQoS()
 				writer.deadline.period.sec = 100;
 				writer.deadline.period.nanosec = 0;
 			}
+			return 1;
 		}
 	}
+	return 0;
 }
 
-DDS::DataReaderQos SelfNego::getReaderQos(char input[])
-{
-	DDS::DataReaderQos ans;
-	ans = DATAREADER_QOS_DEFAULT;
-	isReader = 1;
-	getNetState();
-	getQoS();
-	return ans;
-}
-
-DDS::DataWriterQos SelfNego::getWriterQos(char input[])
+DDS::DataReaderQos SelfNego::getReaderQos(char input[], int &isUdp)
 {
 	int len = strlen(input);
 	int j = 0;
@@ -253,10 +238,41 @@ DDS::DataWriterQos SelfNego::getWriterQos(char input[])
 	{
 		ip[j++] = input[i];
 	}
+	for (int i = 11; i < 20; i++)
+	{
+		ip[i] = 0;
+	}
+	std::string str(ip);
+	std::cout << "IP: " << str << std::endl;
+	DDS::DataReaderQos ans;
+	ans = DATAREADER_QOS_DEFAULT;
+	isReader = 1;
+	getNetState();
+	std::cout << "Delay: " << netState->getDelay() << std::endl;
+	std::cout << "Packetloss: " << netState->getPacketLoss() << std::endl;
+	isUdp = getQoS();
+	return ans;
+}
+
+DDS::DataWriterQos SelfNego::getWriterQos(char input[], int &isUdp)
+{
+	int len = strlen(input);
+	int j = 0;
+	for (int i = 10; i < 21; i++)
+	{
+		ip[j++] = input[i];
+	}
+	for (int i = 11; i < 20; i++)
+	{
+		ip[i] = 0;
+	}
+	printf("IP: %s\n", ip);
     DDS::DataWriterQos ans;
     ans = DATAWRITER_QOS_DEFAULT;
     isReader = 2;
     getNetState();
-	getQoS();
+	std::cout << "Delay: " << netState->getDelay() << std::endl;
+	std::cout << "Packetloss: " << netState->getPacketLoss() << std::endl;
+	isUdp = getQoS();
     return ans;
 }

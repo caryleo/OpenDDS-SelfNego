@@ -10,6 +10,8 @@
 #include <dds\DCPS\StaticIncludes.h>
 #include <dds\DCPS\Service_Participant.h>
 #include <dds\DCPS\Marked_Default_Qos.h>
+#include <dds\DCPS\transport\framework\TransportRegistry.h>
+#include <dds\DCPS\transport\framework\TransportExceptions.h>
 
 //所有的阈值都在这里定义
 #define DELAY_THRESHOLD_1 0
@@ -19,32 +21,35 @@
 #define	PACKETLOSS_THRESHOLD_2 1
 #define	PACKETLOSS_THRESHOLD_3 5
 
+#include <iostream>
+#include <string>
+#include <cstring>
+
 class SelfNego
 {
-  public:
-	~SelfNego(void);
+public:
+	static SelfNego *getInstance()
+	{
+		if (s_instance == NULL)
+		{
+			s_instance = new SelfNego();
+		}
+		return s_instance;
+	}
+	void getNetState();
+	int getQoS();
+	DDS::DataReaderQos getReaderQos(char input[], int &isUdp);
+	DDS::DataWriterQos getWriterQos(char input[], int &isUdp);
 
-   static SelfNego *getInstance()
-   {
-	   if (s_instance == NULL)
-	   {
-		   s_instance = new SelfNego();
-	   }
-	   return s_instance;
-   }
-    void getNetState();
-    void getQoS();
-    DDS::DataReaderQos getReaderQos(char input[]);
-    DDS::DataWriterQos getWriterQos(char input[]);
-    
-  private:
+private:
 	SelfNego(void);
-    static SelfNego *s_instance;
-    NetState *netState;
-    DDS::DataReaderQos reader;  //1
-    DDS::DataWriterQos writer;  //2
-    int isReader;
-    char ip[20];
+	~SelfNego(void);
+	static SelfNego *s_instance;
+	NetState *netState;
+	DDS::DataReaderQos reader;  //1
+	DDS::DataWriterQos writer;  //2
+	int isReader;
+	char ip[20];
 };
 
 #endif
