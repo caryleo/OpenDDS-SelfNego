@@ -1,10 +1,9 @@
 #pragma once
 
 
-#include "GetsysInfo.h"
-#include "Ping.h"
+
 #include <cstring>
-#include <afxtempl.h>
+
 #include <dds\DdsDcpsInfrastructureC.h>
 #include <dds\DdsDcpsPublicationC.h>
 #include <dds/DdsDcpsSubscriptionC.h>
@@ -30,9 +29,9 @@ public:
 	double getPacketLoss();
 
 private:
-	double bandWidth;  //´ø¿í£¬µ¥Î»bps
-	//double throughput; //ÍÌÍÂÁ¿£¬µ¥Î»bps
-	//double ratio;      //ÀûÓÃÂÊ
-	double delay;      //Ê±ÑÓ£¬µ¥Î»ms
-	double packetLoss; //¶ª°üÂÊ
+	double bandWidth;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»bps
+	//double throughput; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»bps
+	//double ratio;      //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	double delay;      //Ê±ï¿½Ó£ï¿½ï¿½ï¿½Î»ms
+	double packetLoss; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 };
