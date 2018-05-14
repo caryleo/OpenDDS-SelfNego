@@ -258,7 +258,7 @@ DDS::DataReaderQos SelfNego::getReaderQos(char input[], int &isUdp)
 DDS::DataWriterQos SelfNego::getWriterQos(char input[], int &isUdp)
 {
 	int len = strlen(input);
-	int j = 0;
+//	int j = 0;
 	int i = 0, j = len - 1;
     while (i < len)
     {
