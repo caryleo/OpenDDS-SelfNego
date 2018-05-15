@@ -233,18 +233,34 @@ int SelfNego::getQoS()
 DDS::DataReaderQos SelfNego::getReaderQos(char input[], int &isUdp)
 {
 	int len = strlen(input);
-	int j = 0, k = 0;
-
-	for (int i = 10; i < 21; i++)
-	{
-		ip[j++] = input[i];
-	}
-	for (int i = 11; i < 20; i++)
-	{
-		ip[i] = 0;
-	}
-	std::string str(ip);
-	std::cout << "IP: " << str << std::endl;
+	int i = 0, j = len - 1;
+    while (i < len)
+    {
+        if (input[i] == ':')
+        {
+            i += 2;
+            break;
+        }
+        i++;
+    }
+    while (j >= 0)
+    {
+        if (input[j] == ':')
+        {
+            break;
+        }
+        j--;
+    }
+    int p = 0;
+    for (int k = i; k < j; k++)
+    {
+        ip[p++] = input[k];
+    }
+    for(int k = p; k < 20; k++)
+    {
+        ip[k] = 0;
+    }
+	printf("IP: %s\n", ip);
 	DDS::DataReaderQos ans;
 	ans = DATAREADER_QOS_DEFAULT;
 	isReader = 1;
