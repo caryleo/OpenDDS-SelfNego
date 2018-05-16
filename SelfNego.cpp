@@ -265,8 +265,8 @@ DDS::DataReaderQos SelfNego::getReaderQos(char input[], int &isUdp)
 	ans = DATAREADER_QOS_DEFAULT;
 	isReader = 1;
 	getNetState();
-	std::cout << "Delay: " << netState->getDelay() << std::endl;
-	std::cout << "Packetloss: " << netState->getPacketLoss() << std::endl;
+	std::cout << "Delay: " << netState->getDelay() << "ms" << std::endl;
+	std::cout << "PacketLoss: " << netState->getPacketLoss() << "%" << std::endl;
 	isUdp = getQoS();
 	return ans;
 }
@@ -307,8 +307,8 @@ DDS::DataWriterQos SelfNego::getWriterQos(char input[], int &isUdp)
     ans = DATAWRITER_QOS_DEFAULT;
     isReader = 2;
     getNetState();
-	std::cout << "Delay: " << netState->getDelay() << std::endl;
-	std::cout << "Packetloss: " << netState->getPacketLoss() << std::endl;
+	std::cout << "Delay: " << netState->getDelay() << "ms" << std::endl;
+	std::cout << "Packetloss: " << netState->getPacketLoss() << "%" << std::endl;
 	isUdp = getQoS();
     return ans;
 }
